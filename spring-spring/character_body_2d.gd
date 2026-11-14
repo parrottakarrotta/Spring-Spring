@@ -1,8 +1,9 @@
 extends CharacterBody2D
-
+@onready var sprite: AnimatedSprite2D= $Animating
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
+var in_water = false
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
@@ -14,7 +15,12 @@ func _input(event: InputEvent) -> void:
 			var b = clamp(direction.y,-500,500)
 			direction = Vector2(a,b)
 			velocity += direction
-
+			sprite.play("bouncin")
+			if velocity.x > 0:
+				sprite.flip_h = false
+			elif velocity.x < 0:
+				sprite.flip_h = true
+				
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
